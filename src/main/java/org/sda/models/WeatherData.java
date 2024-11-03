@@ -1,7 +1,6 @@
 package org.sda.models;
 
 import javax.persistence.*;
-import javax.xml.stream.Location;
 import java.util.Date;
 
 @Entity
@@ -11,7 +10,9 @@ public class WeatherData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //private Location location;
+    @ManyToOne
+    @JoinColumn(name = "locations_id")
+    private Location location;
 
     private Date date;
 
@@ -25,8 +26,8 @@ public class WeatherData {
 
     private String windDirection;
 
-    public WeatherData(long id, Date date, Double temperature, Double pressure, Double humidity, Double windSpeed, String windDirection) {
-        this.id = id;
+    public WeatherData(Date date, Double temperature, Double pressure, Double humidity, Double windSpeed, String windDirection) {
+
         //this.location = location;
         this.date = date;
         this.temperature = temperature;
@@ -38,6 +39,12 @@ public class WeatherData {
 
     public WeatherData() {
     }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+
 
     @Override
     public String toString() {
@@ -52,5 +59,7 @@ public class WeatherData {
                 ", windDirection='" + windDirection + '\'' +
                 '}';
     }
+
+
 }
 
